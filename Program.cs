@@ -34,24 +34,64 @@
 //     System.Console.WriteLine($"Непредвиденная ошибка: {ex.Message}");
 // }
 
-// === finally ===
+// // === finally ===
+// try {
+//     System.Console.WriteLine("Пытаемся выполнить операцию...");
+//     int[] numbers = [1, 2, 3];
+//     System.Console.WriteLine(numbers[5]);
+// }
+// catch (IndexOutOfRangeException ex) {
+//     System.Console.WriteLine($"Ошибка: {ex.Message}");
+// }
+// finally {
+//     System.Console.WriteLine("Этот блок выполнится в любом случае");
+// }
+
+// // === finally без ошибки ===
+// System.Console.WriteLine();
+// try {
+//     System.Console.WriteLine("Операция без ошибок");
+// }
+// finally {
+//     System.Console.WriteLine("И здесь finally тоже сработал");
+// }
+
+// === throw ===
+using System.Security.Principal;
+
 try {
-    System.Console.WriteLine("Пытаемся выполнить операцию...");
-    int[] numbers = [1, 2, 3];
-    System.Console.WriteLine(numbers[5]);
-}
-catch (IndexOutOfRangeException ex) {
+    double result = CalculateSquareRoot(-5);
+    System.Console.WriteLine(result);
+} catch (ArgumentException ex) {
     System.Console.WriteLine($"Ошибка: {ex.Message}");
 }
-finally {
-    System.Console.WriteLine("Этот блок выполнится в любом случае");
+
+double CalculateSquareRoot(double number) {
+    if (number < 0) {
+        throw new ArgumentException("Число не может быть отрицательным");
+    }
+    return Math.Sqrt(number);
 }
 
-// === finally без ошибки ===
+// === Собственное исключение ===
 System.Console.WriteLine();
+
 try {
-    System.Console.WriteLine("Операция без ошибок");
+    Withdraw(1000, 1500);
 }
-finally {
-    System.Console.WriteLine("И здесь finally тоже сработал");
+catch (NegativeBalanceException ex) {
+    System.Console.WriteLine($"Операция отклонена: {ex.Message}");
+}
+
+Withdraw(1000, 400);
+
+void Withdraw(double balance, double amount) {
+    if (amount > balance) {
+        throw new NegativeBalanceException($"Недостаточно средств: на счёте {balance}, а нужно снять {amount}");
+    }
+    System.Console.WriteLine($"Снято {amount}, остаток {balance - amount}");
+}
+
+class NegativeBalanceException : Exception {
+    public NegativeBalanceException(string message) : base(message) { }
 }
