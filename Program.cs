@@ -10,28 +10,48 @@
 
 // System.Console.WriteLine("Программа продолжает работу как ни в чём не бывало");
 
-// === ex.Message ===
-using System.Security.Cryptography;
+// // === ex.Message ===
+// try {
+//     int[] numbers = [1, 2, 3];
+//     System.Console.WriteLine(numbers[10]);
+// }
+// catch (IndexOutOfRangeException ex) {
+//     System.Console.WriteLine($"Произошла ошибка: {ex.Message}");
+// }
 
+// // === Несколько catch ===
+
+// Console.Write("Введите делитель: ");
+// try {
+//     int divisor = int.Parse(Console.ReadLine()!);
+//     int result = 100 / divisor;
+//     System.Console.WriteLine($"Результат: {result}");
+// } catch (FormatException) {
+//     System.Console.WriteLine("ошибка: это не число");
+// } catch (DivideByZeroException) {
+//     System.Console.WriteLine("Ошибка: нельзя делить на ноль");
+// } catch (Exception ex) {
+//     System.Console.WriteLine($"Непредвиденная ошибка: {ex.Message}");
+// }
+
+// === finally ===
 try {
+    System.Console.WriteLine("Пытаемся выполнить операцию...");
     int[] numbers = [1, 2, 3];
-    System.Console.WriteLine(numbers[10]);
+    System.Console.WriteLine(numbers[5]);
 }
 catch (IndexOutOfRangeException ex) {
-    System.Console.WriteLine($"Произошла ошибка: {ex.Message}");
+    System.Console.WriteLine($"Ошибка: {ex.Message}");
+}
+finally {
+    System.Console.WriteLine("Этот блок выполнится в любом случае");
 }
 
-// === Несколько catch ===
-
-Console.Write("Введите делитель: ");
+// === finally без ошибки ===
+System.Console.WriteLine();
 try {
-    int divisor = int.Parse(Console.ReadLine()!);
-    int result = 100 / divisor;
-    System.Console.WriteLine($"Результат: {result}");
-} catch (FormatException) {
-    System.Console.WriteLine("ошибка: это не число");
-} catch (DivideByZeroException) {
-    System.Console.WriteLine("Ошибка: нельзя делить на ноль");
-} catch (Exception ex) {
-    System.Console.WriteLine($"Непредвиденная ошибка: {ex.Message}");
+    System.Console.WriteLine("Операция без ошибок");
+}
+finally {
+    System.Console.WriteLine("И здесь finally тоже сработал");
 }
